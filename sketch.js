@@ -1,31 +1,34 @@
 let osc, osc2, fft, mic, capture;
-
+let running = false;
 function setup() {
+  noLoop();
   createCanvas(1220, 700);
   rectMode(CENTER);
   noStroke();
 
-  osc = new p5.TriOsc(); // set frequency and type
-  osc.amp(0.5);
-  osc.start();
+  // osc = new p5.TriOsc(); // set frequency and type
+  // osc.amp(0.5);
+  // osc.start();
   
-  osc2 = new p5.TriOsc(); // set frequency and type
-  osc2.amp(0.5);
-  osc2.start();
+  // osc2 = new p5.TriOsc(); // set frequency and type
+  // osc2.amp(0.5);
+  // osc2.start();
 
-  fft = new p5.FFT();
+  // fft = new p5.FFT();
 
-  mic = new p5.AudioIn();
-  mic.start();
-  fft.setInput(mic);
+  // mic = new p5.AudioIn();
+  // mic.start();
+  // fft.setInput(mic);
 
   // Create a video capture object
   capture = createCapture(VIDEO);
   capture.size(320, 240); // Set the video size
   capture.hide(); // Hide the video feed
+  
 }
 
 function draw() {
+  if(running) {
   background(255);
 
   // Draw the camera input
@@ -95,3 +98,23 @@ function draw() {
   osc.amp(0.5);
   osc2.amp(0.5)
 }
+}
+
+// initialize the sketch when user clicks anywhere in the window
+window.addEventListener('click', (e) => {
+  osc = new p5.TriOsc(); // set frequency and type
+  osc.amp(0.5);
+  osc.start();
+  
+  osc2 = new p5.TriOsc(); // set frequency and type
+  osc2.amp(0.5);
+  osc2.start();
+
+  fft = new p5.FFT();
+
+  mic = new p5.AudioIn();
+  mic.start();
+  fft.setInput(mic);
+  loop()
+  running = true;
+})
